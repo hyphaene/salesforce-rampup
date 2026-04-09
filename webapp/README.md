@@ -1,73 +1,102 @@
-# React + TypeScript + Vite
+# Salesforce Rampup
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plateforme d'apprentissage pour les certifications Salesforce Developer — construite par un dev TypeScript pour des devs TypeScript.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** + **TypeScript 6**
+- **Vite 8** (build + HMR)
+- **Tailwind CSS v4** + **ShadCN/ui**
+- **TanStack Router** (file-based routing)
+- **localStorage** pour la persistence
 
-## React Compiler
+## Fonctionnalités
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Roadmap Tracker (`/`)
 
-## Expanding the ESLint configuration
+5 phases de certification avec ~100 items checkables (notions, exercices, superbadges). Progression globale et par phase persistée en localStorage.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Phase                  | Certif   | Durée estimée |
+| ---------------------- | -------- | ------------- |
+| Fondations             | —        | 3-4 semaines  |
+| Platform Developer I   | PD1      | 6-8 semaines  |
+| JavaScript Developer I | JS-Dev-I | 2-3 semaines  |
+| Platform Developer II  | PD2      | 3-6 mois      |
+| Integration Architect  | Int-Arch | Long terme    |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Apprendre (`/learn`)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+163 lessons structurées couvrant tous les domaines :
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Domaine                                               | Lessons |
+| ----------------------------------------------------- | ------- |
+| Apex (types, DML, triggers, async, testing, patterns) | 52      |
+| SOQL / Data Model                                     | 30      |
+| LWC / JavaScript                                      | 41      |
+| Security / Integration / Flows / Deployment           | 40      |
+
+Chaque lesson inclut :
+
+- Contenu markdown riche avec exemples de code
+- Analogies TypeScript/React/Vue systématiques
+- Pièges d'examen (gotchas)
+- Tags de pertinence par certification
+
+### Quiz & QCM (`/quiz`)
+
+189 questions exam-style avec mode entraînement :
+
+| Domaine                                    | Questions |
+| ------------------------------------------ | --------- |
+| Apex                                       | 60        |
+| JavaScript / LWC                           | 47        |
+| SOQL / Security / Deployment / Integration | 42        |
+| Flows / Data Model / Scénarios             | 34        |
+
+Features :
+
+- Mode training (explication immédiate après chaque réponse)
+- Multi-select supporté
+- Score global persisté en localStorage
+- Résultats détaillés avec review des erreurs
+
+## Getting Started
+
+```bash
+cd webapp
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Ouvrir http://localhost:5173
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Structure
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+webapp/src/
+├── data/
+│   ├── roadmap.ts              # 5 phases, ~100 items
+│   ├── useRoadmapStore.ts      # State + localStorage
+│   ├── useQuizStore.ts         # Quiz engine state
+│   ├── questions/              # 189 QCM (4 fichiers par domaine)
+│   └── lessons/                # 163 lessons (4 fichiers par domaine)
+├── components/
+│   ├── layout/Sidebar.tsx      # Navigation + progression
+│   ├── quiz/                   # QuizEngine, QuizCard, QuizResults
+│   └── learn/                  # CategoryPicker, LessonViewer
+└── routes/                     # TanStack file-based routing
+    ├── index.tsx               # Dashboard roadmap
+    ├── phase.$phaseId.tsx      # Détail phase
+    ├── quiz.tsx + quiz.*       # Hub QCM + quiz par domaine
+    └── learn.tsx + learn.*     # Hub lessons + viewer
+```
+
+## Roadmap
+
+Voir [ROADMAP.md](./ROADMAP.md) pour les features planifiées (v2-v6) :
+
+- Mapping TypeScript ↔ Apex (cheat sheet interactif)
+- Governor Limits Simulator
+- Order of Execution (flowchart interactif)
+- Glossaire SF ↔ TS
+- Flash Cards + Spaced Repetition
