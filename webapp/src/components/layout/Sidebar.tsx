@@ -77,6 +77,39 @@ export function Sidebar({
             </div>
           </Link>
 
+          <Link
+            to="/cheatsheet"
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-accent [&.active]:bg-accent [&.active]:font-medium font-medium"
+          >
+            <span className="text-base">⚡</span>
+            <div className="flex-1 min-w-0">
+              <div>Cheatsheet TS↔Apex</div>
+              <div className="text-xs text-muted-foreground">44 entrées</div>
+            </div>
+          </Link>
+
+          <Link
+            to="/execution-order"
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-accent [&.active]:bg-accent [&.active]:font-medium font-medium"
+          >
+            <span className="text-base">🔄</span>
+            <div className="flex-1 min-w-0">
+              <div>Order of Execution</div>
+              <div className="text-xs text-muted-foreground">20 etapes</div>
+            </div>
+          </Link>
+
+          <Link
+            to="/simulator"
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors hover:bg-accent [&.active]:bg-accent [&.active]:font-medium font-medium"
+          >
+            <span className="text-base">🔬</span>
+            <div className="flex-1 min-w-0">
+              <div>Governor Limits</div>
+              <div className="text-xs text-muted-foreground">11 scénarios</div>
+            </div>
+          </Link>
+
           <div className="pt-2 pb-1 px-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
             Phases
           </div>

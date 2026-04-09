@@ -9,8 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SimulatorRouteImport } from './routes/simulator'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as LearnRouteImport } from './routes/learn'
+import { Route as ExecutionOrderRouteImport } from './routes/execution-order'
+import { Route as CheatsheetRouteImport } from './routes/cheatsheet'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as LearnIndexRouteImport } from './routes/learn.index'
@@ -19,6 +22,11 @@ import { Route as PhasePhaseIdRouteImport } from './routes/phase.$phaseId'
 import { Route as LearnLessonIdRouteImport } from './routes/learn.$lessonId'
 import { Route as PhaseRouteImport } from './routes/phase.'
 
+const SimulatorRoute = SimulatorRouteImport.update({
+  id: '/simulator',
+  path: '/simulator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
@@ -27,6 +35,16 @@ const QuizRoute = QuizRouteImport.update({
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExecutionOrderRoute = ExecutionOrderRouteImport.update({
+  id: '/execution-order',
+  path: '/execution-order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheatsheetRoute = CheatsheetRouteImport.update({
+  id: '/cheatsheet',
+  path: '/cheatsheet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -67,8 +85,11 @@ const PhaseRoute = PhaseRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cheatsheet': typeof CheatsheetRoute
+  '/execution-order': typeof ExecutionOrderRoute
   '/learn': typeof LearnRouteWithChildren
   '/quiz': typeof QuizRouteWithChildren
+  '/simulator': typeof SimulatorRoute
   '/phase/': typeof PhaseRoute
   '/learn/$lessonId': typeof LearnLessonIdRoute
   '/phase/$phaseId': typeof PhasePhaseIdRoute
@@ -78,6 +99,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cheatsheet': typeof CheatsheetRoute
+  '/execution-order': typeof ExecutionOrderRoute
+  '/simulator': typeof SimulatorRoute
   '/phase': typeof PhaseRoute
   '/learn/$lessonId': typeof LearnLessonIdRoute
   '/phase/$phaseId': typeof PhasePhaseIdRoute
@@ -88,8 +112,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cheatsheet': typeof CheatsheetRoute
+  '/execution-order': typeof ExecutionOrderRoute
   '/learn': typeof LearnRouteWithChildren
   '/quiz': typeof QuizRouteWithChildren
+  '/simulator': typeof SimulatorRoute
   '/phase/': typeof PhaseRoute
   '/learn/$lessonId': typeof LearnLessonIdRoute
   '/phase/$phaseId': typeof PhasePhaseIdRoute
@@ -101,8 +128,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cheatsheet'
+    | '/execution-order'
     | '/learn'
     | '/quiz'
+    | '/simulator'
     | '/phase/'
     | '/learn/$lessonId'
     | '/phase/$phaseId'
@@ -112,6 +142,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cheatsheet'
+    | '/execution-order'
+    | '/simulator'
     | '/phase'
     | '/learn/$lessonId'
     | '/phase/$phaseId'
@@ -121,8 +154,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/cheatsheet'
+    | '/execution-order'
     | '/learn'
     | '/quiz'
+    | '/simulator'
     | '/phase/'
     | '/learn/$lessonId'
     | '/phase/$phaseId'
@@ -133,14 +169,24 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CheatsheetRoute: typeof CheatsheetRoute
+  ExecutionOrderRoute: typeof ExecutionOrderRoute
   LearnRoute: typeof LearnRouteWithChildren
   QuizRoute: typeof QuizRouteWithChildren
+  SimulatorRoute: typeof SimulatorRoute
   PhaseRoute: typeof PhaseRoute
   PhasePhaseIdRoute: typeof PhasePhaseIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/simulator': {
+      id: '/simulator'
+      path: '/simulator'
+      fullPath: '/simulator'
+      preLoaderRoute: typeof SimulatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz': {
       id: '/quiz'
       path: '/quiz'
@@ -153,6 +199,20 @@ declare module '@tanstack/react-router' {
       path: '/learn'
       fullPath: '/learn'
       preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/execution-order': {
+      id: '/execution-order'
+      path: '/execution-order'
+      fullPath: '/execution-order'
+      preLoaderRoute: typeof ExecutionOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cheatsheet': {
+      id: '/cheatsheet'
+      path: '/cheatsheet'
+      fullPath: '/cheatsheet'
+      preLoaderRoute: typeof CheatsheetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -233,8 +293,11 @@ const QuizRouteWithChildren = QuizRoute._addFileChildren(QuizRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CheatsheetRoute: CheatsheetRoute,
+  ExecutionOrderRoute: ExecutionOrderRoute,
   LearnRoute: LearnRouteWithChildren,
   QuizRoute: QuizRouteWithChildren,
+  SimulatorRoute: SimulatorRoute,
   PhaseRoute: PhaseRoute,
   PhasePhaseIdRoute: PhasePhaseIdRoute,
 }
